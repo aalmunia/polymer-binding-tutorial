@@ -1,0 +1,7 @@
+{
+  "name": "bind-observe-tutorial",
+  "short_name": "bind-observe-tutorial",
+  "description": "A tutorial to explore the observers and data binding concepts",
+  "start_url": "/",
+  "display": "standalone"
+}

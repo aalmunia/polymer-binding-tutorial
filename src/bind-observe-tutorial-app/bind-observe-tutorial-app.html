@@ -1,0 +1,64 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="bind-observe-tutorial-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <fieldset>
+      <legend>One Way Binding Property</legend>
+      <span>Esto es una propiedad linkada one-way [[ oneWayProp ]]</span>
+      <br />
+      <input type="button" value="Pulsar para alterar el valor de oneWayProp" on-click="_handleClickOneWayButtonChange" />
+      <br />
+      <input type="text" on-input="_handleTextOneWayPropChange" placeholder="Inserta algo..." />
+    </fieldset>
+
+    <fieldset>
+      <span>Esto es una propiedad linkada two-way {{ twoWayProp }}</span>
+      <br />
+      <!--  on-input="_handleTextTwoWayPropChange" -->
+      <input type="text" value="{{twoWayProp::input}}" />
+    </fieldset>
+
+    
+    
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class BindObserveTutorialApp extends Polymer.Element {
+      static get is() { return 'bind-observe-tutorial-app'; }
+      static get properties() {
+        return {
+          oneWayProp: {
+            type: String,
+            value: 'OneWay Binding HERE'
+          },
+          twoWayProp: {
+            type: String,
+            value: 'TwoWay Binding HERE'
+          }
+        };
+      }
+
+      _handleTextOneWayPropChange(oEvent) {
+        this.oneWayProp = oEvent.currentTarget.value;
+      }
+
+      _handleClickOneWayButtonChange(oEvent) {
+        this.oneWayProp = 'Esto ha cambiado a través del método _handleClickOneWayButtonChange';
+      }
+
+    }
+
+    window.customElements.define(BindObserveTutorialApp.is, BindObserveTutorialApp);
+  </script>
+</dom-module>
