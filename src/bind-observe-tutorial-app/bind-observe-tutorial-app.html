@@ -19,9 +19,19 @@
 
     <fieldset>
       <span>Esto es una propiedad linkada two-way {{ twoWayProp }}</span>
-      <br />
-      <!--  on-input="_handleTextTwoWayPropChange" -->
+      <br />      
       <input type="text" value="{{twoWayProp::input}}" />
+      <br />      
+    </fieldset>
+
+    <fieldset>
+      <span>Estos valores pertenecen a un objeto, son propiedades del mismo</span><br />
+      <span>{{ myTest.prop1 }}</span>
+      <br />
+      <span>{{ myTest.prop2 }}</span>
+      <br />
+      <input type="button" on-click="_handleClickObjectChangeProps" value="Alterar valor de propiedades" />
+      <br />
     </fieldset>
 
     
@@ -45,8 +55,25 @@
           twoWayProp: {
             type: String,
             value: 'TwoWay Binding HERE'
+          },
+          myTest: {
+            type: Object,
+            value: {
+              prop1: 'mesa',
+              prop2: 'cosa'
+            }
           }
         };
+      }
+
+      static get observers() {
+        return [
+          'myTestProp1Changed(myTest.prop1)'
+        ]
+      }
+
+      myTestProp1Changed(newPropValue) {
+        console.log('Esto es el handler del evento de cambio de la propiedad del componente');
       }
 
       _handleTextOneWayPropChange(oEvent) {
@@ -55,6 +82,11 @@
 
       _handleClickOneWayButtonChange(oEvent) {
         this.oneWayProp = 'Esto ha cambiado a través del método _handleClickOneWayButtonChange';
+      }
+
+      _handleClickObjectChangeProps(oEvent) {
+        this.set('myTest.prop1', 'No podemos usar this.ObjectXXXX.PropYYY = ;');
+        this.set('myTest.prop2', 'Debemos usar this.set (ObjectXXX.PropYYYY, [NEW_VALUE])');
       }
 
     }
